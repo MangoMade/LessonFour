@@ -21,7 +21,7 @@ class MovieCollectionViewCell: UICollectionViewCell {
         contentView.layer.cornerRadius = 6
     }
     
-//    func config(with movie: Movie) {
-//        nameLabel.text = movie.title
-//    }
+    func config(with movie: Movie) {
+        nameLabel.text = movie.title
+    }
 }

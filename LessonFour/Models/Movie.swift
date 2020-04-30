@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 //{
 //    "subjects": [
@@ -22,3 +23,20 @@ import Foundation
 //    ]
 //}
 
+struct MovieList: Codable {
+    let subjects: [Movie]
+}
+
+struct Movie: Codable {
+    let title: String
+    let images: MovieImages
+    let id: String
+}
+
+struct MovieImages: Codable {
+    let urlString: String
+    
+    enum CodingKeys: String, CodingKey {
+        case urlString = "medium"
+    }
+}

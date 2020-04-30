@@ -16,27 +16,41 @@ class HomePageViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
+    private var movies = [Movie]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         registerCell()
-        
+        fetchMovies()
         
     }
 
     private func registerCell() {
         collectionView.registerByNib(MovieCollectionViewCell.self)
     }
+    
+    private func fetchMovies() {
+        API.comingSoonMovies { (result) in
+            switch result {
+            case .success(let list):
+                self.movies = list.subjects
+                self.collectionView.reloadData()
+            case .failure:
+                break
+            }
+        }
+    }
 }
 
 extension HomePageViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return movies.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: MovieCollectionViewCell = collectionView.dequeueReusableCell(for: indexPath)
-        
+        cell.config(with: movies[indexPath.row])
         return cell
     }
 }
